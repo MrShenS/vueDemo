@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>生命周期钩子函数</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+    <!-- <script src='main.js'></script> -->
+    <script src="vue.js" type="text/javaScript" charset="utf-8"></script>
+</head>
+<body>
+
+    <div id='app-2'>
+        {{ a }}
+    </div>
+    <div>
+        {{massage}}
+    </div>
+
+    
+    
+    <script type="text/javaScript">
+    //挂载 节点被vue的节点所代替
+    var data={a:1,massage:'male1'}
+    // Object.freeze(data)//禁用数据响应式更新 代码需要放在vue对象之前是生效
+    var vm=new Vue({
+        el: "#app-2",
+        data: data,
+        //实例化知道之后 数据观测（data observer） 和（event/watcher）  事件配置之前被调回 简单理解为页面开始初始化配置之前
+        beforeCreate:function(){
+        console.log("开始之前");
+        },
+        //实例创建完成之后被立即调用 
+        //在这一步是实例完成  挂载未完成之间 挂载未完成之前el是不可见的
+        created: function () {
+            // `this` points to the vm instance
+            console.log('a is: ' + this.a)
+        },
+        //
+        beforeMount:function() {
+            console.log("beforeMount  挂载开始之前 相关渲染函数首次被调用 标志着开始挂载")
+        },
+        mounted:function() {
+            console.log("Mount 挂载成功");
+            
+        },
+        beforeUpdate:function(){
+            console.log("beforeUpdate  标志着数据更新 即响应式数据变化   例子： Vue对象中的data发生改变");
+            
+        }
+ 
+    })
+    
+    //响应是改变的数据需要在Vue对象的data里面绑定
+ 
+    // data.a='12'
+    
+    vm.$data.a="今天是个好日子"
+
+
+     
+
+    </script>
+</body>
+</html>
